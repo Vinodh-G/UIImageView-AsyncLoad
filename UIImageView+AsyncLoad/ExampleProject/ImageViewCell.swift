@@ -16,9 +16,9 @@ class ImageViewCell: UICollectionViewCell {
     func configureCellFor(_ imageURL: String)
     {
         self.imageContentView.image = nil;
-        self.imageContentView.setImageFrom(imageURLString: imageURL){(success : Bool, image : UIImage?, error: Error?) in
+        
+        self.imageContentView.setImageFrom(imageURLString: imageURL, placeHolderImage: UIImage(named:"placeHolerImage")){(success : Bool, image : UIImage?, error: Error?) in
             if (success) {
-                print("Downloading image for url : \(imageURL) was successfull")
             }
         }
     }

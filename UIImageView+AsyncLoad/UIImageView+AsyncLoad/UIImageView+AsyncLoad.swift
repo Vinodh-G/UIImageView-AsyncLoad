@@ -25,9 +25,13 @@ extension UIImageView{
         }
     }
 
-    func setImageFrom(imageURLString : String, placeHolderImage: UIImage = UIImage(), completionBlock: DownloadHandler?) {
+    func setImageFrom(imageURLString : String, placeHolderImage: UIImage? = nil, completionBlock: DownloadHandler?) {
         
         if (imageURLString.characters.count > 0){
+            
+            if ((placeHolderImage) != nil){
+                self.image = placeHolderImage;
+            }
             
             self.imageURLId = imageURLString
             
