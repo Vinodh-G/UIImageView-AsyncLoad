@@ -1,7 +1,7 @@
 # UIImageView-AsyncLoad
 =======================
 
-UIImageView+AsyncLoad is an extension of UIImageView for loading and displaying images asynchronously on iOS. Developer has a hassle free environment for showing the remote image on imageview whitout doing much work, more sepcifically with out blocking the UI
+UIImageView+AsyncLoad is an extension of UIImageView for loading and displaying images asynchronously on iOS. Developer will have a hassle free environment for showing the remote image on imageview without doing much work, more sepcifically not worring about network calls, with out blocking the UI.
 
 ![solarized vim](http://i.imgur.com/SqzM7v4.jpg)
 
