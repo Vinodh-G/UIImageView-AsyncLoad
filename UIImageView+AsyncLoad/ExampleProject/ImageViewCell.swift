@@ -21,6 +21,12 @@ class ImageViewCell: UICollectionViewCell {
             if (success) {
             }
         }
+        
+//        self.imageContentView.setImageFrom(imageURLString: imageURL, progressHandler: { (expectedBytes : Int64, downloadedBytes: Int64, error : Error?) in
+//            print(" \(expectedBytes / downloadedBytes * 100) : \(imageURL)")
+//        }) { (success:Bool, image: UIImage?, error:Error?) in
+//            
+//        }
     }
     
     override func awakeFromNib() {
