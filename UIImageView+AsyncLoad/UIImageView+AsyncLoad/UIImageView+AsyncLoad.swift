@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 typealias DownloadHandler = (_ success: Bool,  _ image: UIImage?,  _ error: Error?) -> Void
+typealias DownloadProgressHandler = (_ bytesDownloaded: Int64,  _ totalBytesExpected: Int64,  _ completed: Bool, _ image : UIImage?) -> Void
 
 private var kImageURLKey : String = "imageURLKey"
 
@@ -25,7 +26,7 @@ extension UIImageView{
         }
     }
 
-    func setImageFrom(imageURLString : String, placeHolderImage: UIImage? = nil, completionBlock: DownloadHandler?) {
+    func setImageFrom(imageURLString : String, placeHolderImage: UIImage? = nil, completionHandler: DownloadHandler?) {
         
         if (imageURLString.characters.count > 0){
             
@@ -41,13 +42,27 @@ extension UIImageView{
                     self.updateImage(image: image!, imageUrl: imageURLString)
                 }
                 
-                if ((completionBlock) != nil){
-                    completionBlock!(success, image, error)
+                if ((completionHandler) != nil){
+                    completionHandler!(success, image, error)
                 }
             }
         }
     }
     
+    func setImageFrom(imageURLString : String, placeHolderImage: UIImage? = nil, progressHandler: DownloadProgressHandler?) {
+        
+        if (imageURLString.characters.count > 0){
+            
+            if ((placeHolderImage) != nil){
+                self.image = placeHolderImage;
+            }
+            
+            self.imageURLId = imageURLString
+            
+            
+        }
+        
+    }
     
     private func updateImage(image:UIImage, imageUrl:String) {
         
