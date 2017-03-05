@@ -105,15 +105,47 @@
                                     <constraint firstAttribute="height" constant="2" id="KT2-CX-aXk"/>
                                 </constraints>
                             </progressView>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FEq-8k-elC">
+                                <rect key="frame" x="0.0" y="587" width="375" height="80"/>
+                                <subviews>
+                                    <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M0w-0b-urT">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sKA-7z-0UI">
+                                        <rect key="frame" x="11" y="4" width="353" height="72"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="M0w-0b-urT" firstAttribute="top" secondItem="FEq-8k-elC" secondAttribute="top" id="Cz4-oE-4z5"/>
+                                    <constraint firstAttribute="trailing" secondItem="M0w-0b-urT" secondAttribute="trailing" id="QU7-Ty-N96"/>
+                                    <constraint firstAttribute="trailing" secondItem="sKA-7z-0UI" secondAttribute="trailing" constant="11" id="VOG-6S-fYP"/>
+                                    <constraint firstItem="sKA-7z-0UI" firstAttribute="top" secondItem="FEq-8k-elC" secondAttribute="top" constant="4" id="dRq-eH-zBm"/>
+                                    <constraint firstAttribute="height" constant="80" id="jIQ-o0-f9d"/>
+                                    <constraint firstAttribute="bottom" secondItem="sKA-7z-0UI" secondAttribute="bottom" constant="4" id="n70-Ag-aab"/>
+                                    <constraint firstItem="sKA-7z-0UI" firstAttribute="leading" secondItem="FEq-8k-elC" secondAttribute="leading" constant="11" id="uwT-xO-OWQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="M0w-0b-urT" secondAttribute="bottom" id="vPl-l9-aMx"/>
+                                    <constraint firstItem="M0w-0b-urT" firstAttribute="leading" secondItem="FEq-8k-elC" secondAttribute="leading" id="yvR-0a-fS5"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="DHS-Hr-bX0" firstAttribute="leading" secondItem="oCK-Ie-Pwj" secondAttribute="leading" id="1UP-8z-y8n"/>
+                            <constraint firstItem="DwZ-6D-O5J" firstAttribute="top" secondItem="FEq-8k-elC" secondAttribute="bottom" id="NWl-Mr-np8"/>
                             <constraint firstItem="uWG-Yg-hUx" firstAttribute="top" secondItem="HHl-aV-0MN" secondAttribute="bottom" constant="-20" id="VRw-FN-7BW"/>
+                            <constraint firstItem="FEq-8k-elC" firstAttribute="leading" secondItem="oCK-Ie-Pwj" secondAttribute="leading" id="Wa6-Wc-idm"/>
                             <constraint firstItem="DwZ-6D-O5J" firstAttribute="top" secondItem="uWG-Yg-hUx" secondAttribute="bottom" id="XTJ-Hn-ihD"/>
                             <constraint firstItem="uWG-Yg-hUx" firstAttribute="leading" secondItem="oCK-Ie-Pwj" secondAttribute="leadingMargin" constant="-16" id="iOn-gx-b5Z"/>
                             <constraint firstAttribute="trailing" secondItem="DHS-Hr-bX0" secondAttribute="trailing" id="iq8-YO-Goo"/>
+                            <constraint firstAttribute="trailing" secondItem="FEq-8k-elC" secondAttribute="trailing" id="mRL-fE-yK9"/>
                             <constraint firstItem="DHS-Hr-bX0" firstAttribute="top" secondItem="oCK-Ie-Pwj" secondAttribute="top" id="rvI-x2-iXG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uWG-Yg-hUx" secondAttribute="trailing" constant="-16" id="zyw-b8-p2I"/>
                         </constraints>
@@ -123,6 +155,8 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="descContentView" destination="FEq-8k-elC" id="gOZ-Yj-nPq"/>
+                        <outlet property="descriptionTextView" destination="sKA-7z-0UI" id="HM8-sY-itg"/>
                         <outlet property="imageView" destination="uWG-Yg-hUx" id="OuL-3A-Oe0"/>
                         <outlet property="progressView" destination="DHS-Hr-bX0" id="Ga8-aR-qWU"/>
                     </connections>

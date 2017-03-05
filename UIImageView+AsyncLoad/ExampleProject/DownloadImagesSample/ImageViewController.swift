@@ -12,12 +12,17 @@ class ImageViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var descContentView: UIView!
     var photo : Photo?
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.progressView.setProgress(0.0, animated: false)
         if let inPhoto = photo {
+            
+            descriptionTextView.text = inPhoto.description
+            
             imageView.setImageFrom(imageURLString: inPhoto.originalURl, placeHolderImage: nil, progressHandler: { (totalEXpetedBytes, downloadedBytes, error) in
                 
                 let progress = Float(downloadedBytes) / Float(totalEXpetedBytes)
@@ -28,6 +33,15 @@ class ImageViewController: UIViewController {
                 self.progressView.isHidden = true
             })
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        UIView.animate(withDuration: 0.3) {
+            self.descContentView.alpha = 1.0;
+        }
+        
+        super.viewDidAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
