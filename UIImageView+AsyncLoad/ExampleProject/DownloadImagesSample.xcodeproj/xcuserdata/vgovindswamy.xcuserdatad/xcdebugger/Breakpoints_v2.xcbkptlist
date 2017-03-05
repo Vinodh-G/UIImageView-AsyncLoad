@@ -106,7 +106,7 @@
                   moduleName = "DownloadImagesSample"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/Development/Projects/MyRepo/UIImageView+AsyncLoad/UIImageView+AsyncLoad/ImageDownloadManager.swift"
-                  timestampString = "510315217.114452"
+                  timestampString = "510321050.771332"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "115"
@@ -121,7 +121,7 @@
                   moduleName = "DownloadImagesSample"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/Development/Projects/MyRepo/UIImageView+AsyncLoad/UIImageView+AsyncLoad/ImageDownloadManager.swift"
-                  timestampString = "510315217.115752"
+                  timestampString = "510321050.772609"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "115"
@@ -192,6 +192,38 @@
             startingLineNumber = "82"
             endingLineNumber = "82"
             landmarkName = "setImageFrom(imageURLString:placeHolderImage:progressHandler:completionHandler:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownloadImagesSample/ImagesCollectionViewController.swift"
+            timestampString = "510320843.112203"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "configureCell(cell:forPhoto:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownloadImagesSample/DataManager.swift"
+            timestampString = "510320888.674427"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "getPhotos()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

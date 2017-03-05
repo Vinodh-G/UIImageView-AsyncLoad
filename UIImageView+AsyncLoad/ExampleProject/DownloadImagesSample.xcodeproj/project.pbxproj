@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		87076C3E1E6AD43B00CBCB59 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87076C3D1E6AD43B00CBCB59 /* Photo.swift */; };
+		87076C401E6AD57E00CBCB59 /* ImagesList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87076C3F1E6AD57E00CBCB59 /* ImagesList.plist */; };
 		87357E811E505ACB00391157 /* ImageDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87357E7F1E505ACB00391157 /* ImageDownloadManager.swift */; };
 		87357E821E505ACB00391157 /* UIImageView+AsyncLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87357E801E505ACB00391157 /* UIImageView+AsyncLoad.swift */; };
 		87551DAF1DF0259500930A88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87551DAE1DF0259500930A88 /* AppDelegate.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		87076C3D1E6AD43B00CBCB59 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		87076C3F1E6AD57E00CBCB59 /* ImagesList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ImagesList.plist; sourceTree = "<group>"; };
 		87357E7F1E505ACB00391157 /* ImageDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadManager.swift; sourceTree = "<group>"; };
 		87357E801E505ACB00391157 /* UIImageView+AsyncLoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+AsyncLoad.swift"; sourceTree = "<group>"; };
 		87551DAB1DF0259500930A88 /* DownloadImagesSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DownloadImagesSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +78,7 @@
 			children = (
 				87551DAE1DF0259500930A88 /* AppDelegate.swift */,
 				87551DC01DF0274800930A88 /* DataManager.swift */,
+				87076C3D1E6AD43B00CBCB59 /* Photo.swift */,
 				87551DB21DF0259500930A88 /* Main.storyboard */,
 				87551DC41DF02DA900930A88 /* ImageViewCell.swift */,
 				87551DC61DF02DEF00930A88 /* ImagesCollectionViewController.swift */,
@@ -81,6 +86,7 @@
 				87551DB51DF0259500930A88 /* Assets.xcassets */,
 				87551DB71DF0259500930A88 /* LaunchScreen.storyboard */,
 				87551DBA1DF0259500930A88 /* Info.plist */,
+				87076C3F1E6AD57E00CBCB59 /* ImagesList.plist */,
 			);
 			path = DownloadImagesSample;
 			sourceTree = "<group>";
@@ -145,6 +151,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87076C401E6AD57E00CBCB59 /* ImagesList.plist in Resources */,
 				87551DB91DF0259500930A88 /* LaunchScreen.storyboard in Resources */,
 				87551DB61DF0259500930A88 /* Assets.xcassets in Resources */,
 				87551DB41DF0259500930A88 /* Main.storyboard in Resources */,
@@ -158,6 +165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87076C3E1E6AD43B00CBCB59 /* Photo.swift in Sources */,
 				87551DC71DF02DEF00930A88 /* ImagesCollectionViewController.swift in Sources */,
 				87551DC11DF0274800930A88 /* DataManager.swift in Sources */,
 				87551DC51DF02DA900930A88 /* ImageViewCell.swift in Sources */,

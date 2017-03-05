@@ -39,7 +39,7 @@ extension UIImageView{
             self.imageURLId = imageURLString
             
             ImageDownloadManager.sharedManager.getImageFromURL(imageURLString: imageURLString)
-            {(success : Bool, image : UIImage?, error :Error?) in
+            { (success : Bool, image : UIImage?, error :Error?) in
                 
                 if (success){
                     self.updateImage(image: image!, imageUrl: imageURLString)
@@ -76,7 +76,7 @@ extension UIImageView{
                                                                 
                                                                 
             },
-                                                               completionHandler: { (success:Bool, image:UIImage?, error:Error?) in
+                                                               completionHandler: {  (success:Bool, image:UIImage?, error:Error?) in
                                                                 
                                                                 if (success){
                                                                     self.updateImage(image: image!, imageUrl: imageURLString)

@@ -14,7 +14,7 @@ class ImagesCollectionViewController: UICollectionViewController {
 
     
     
-    var imageUrls = DataManager.sharedInstance.getImageURLS()
+    var dataManager = DataManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,22 +29,32 @@ class ImagesCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+        
         return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return imageUrls.count
+        
+        return dataManager.numberOfPhotos()
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ImageViewCell
     
-        cell.configureCellFor(imageUrls[indexPath.row])
-    
+
+        configureCell(cell: cell, forPhoto: dataManager.photoAt(index: indexPath.row)!)
+        
         return cell
+    }
+    
+    
+    func configureCell(cell : ImageViewCell, forPhoto:Photo){
+        
+//        cell.configureCellFor(forPhoto.tumbnailUrl)
+        cell.titleLabel.text = forPhoto.name;
+        cell.descriptionLabel.text = forPhoto.description
+        cell.imageContentView.setImageFrom(imageURLString: forPhoto.tumbnailUrl, placeHolderImage: UIImage(named:"placeHolerImage"), completionHandler: nil)
     }
 }
 
