@@ -10,15 +10,13 @@ import UIKit
 
 private let reuseIdentifier = "imageCellId"
 
-class ImagesCollectionViewController: UICollectionViewController {
+class ImagesCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
-    
-    
     var dataManager = DataManager.shared
+    let transitionDelegate: CollectionViewTransitioningDelegate = CollectionViewTransitioningDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,7 +38,7 @@ class ImagesCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ImageViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TumbnailCell
     
 
         configureCell(cell: cell, forPhoto: dataManager.photoAt(index: indexPath.row)!)
@@ -48,12 +46,35 @@ class ImagesCollectionViewController: UICollectionViewController {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
-    func configureCell(cell : ImageViewCell, forPhoto:Photo){
+        var cellSize = view.bounds.size
+        cellSize.width = (view.bounds.size.width - 6) / 3
+        cellSize.height = view.bounds.size.height / 6
+        return cellSize
         
-//        cell.configureCellFor(forPhoto.tumbnailUrl)
-        cell.titleLabel.text = forPhoto.name;
-        cell.descriptionLabel.text = forPhoto.description
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let attributes = collectionView.layoutAttributesForItem(at: indexPath as IndexPath)
+        let attributesFrame = attributes?.frame
+        let frameToOpenFrom = collectionView.convert(attributesFrame!, to:  collectionView.superview)
+        transitionDelegate.openingFrame = frameToOpenFrom
+        
+        let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+        
+        let imageViewController : ImageViewController = storyBoard.instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
+        imageViewController.photo = dataManager.photoAt(index: indexPath.row)!
+        imageViewController.modalPresentationStyle = .custom
+        imageViewController.transitioningDelegate = transitionDelegate
+        present(imageViewController,
+                animated: true,
+                completion: nil)
+    }
+    
+    func configureCell(cell : TumbnailCell, forPhoto:Photo){
+        
         cell.imageContentView.setImageFrom(imageURLString: forPhoto.tumbnailUrl, placeHolderImage: UIImage(named:"placeHolerImage"), completionHandler: nil)
     }
 }
