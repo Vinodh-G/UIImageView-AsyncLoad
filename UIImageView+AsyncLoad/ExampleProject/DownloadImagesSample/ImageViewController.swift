@@ -11,14 +11,22 @@ import UIKit
 class ImageViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var progressView: UIProgressView!
     var photo : Photo?
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.progressView.setProgress(0.0, animated: false)
         if let inPhoto = photo {
             imageView.setImageFrom(imageURLString: inPhoto.originalURl, placeHolderImage: nil, progressHandler: { (totalEXpetedBytes, downloadedBytes, error) in
                 
-            }, completionHandler: nil)
+                let progress = Float(downloadedBytes) / Float(totalEXpetedBytes)
+                
+                self.progressView.setProgress(progress, animated: true)
+                
+            }, completionHandler:{(success, image, error) in
+                self.progressView.isHidden = true
+            })
         }
     }
 
@@ -31,6 +39,10 @@ class ImageViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func swipeToDissmiss(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+
+    }
     /*
     // MARK: - Navigation
 

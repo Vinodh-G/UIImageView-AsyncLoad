@@ -88,7 +88,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uWG-Yg-hUx">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uWG-Yg-hUx">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Py-HG-U6x">
@@ -99,20 +99,45 @@
                                     <action selector="dissmissScreen:" destination="1Tu-8P-B6l" eventType="touchUpInside" id="0Nu-SE-rqi"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="DHS-Hr-bX0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="KT2-CX-aXk"/>
+                                </constraints>
+                            </progressView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="DHS-Hr-bX0" firstAttribute="leading" secondItem="oCK-Ie-Pwj" secondAttribute="leading" id="1UP-8z-y8n"/>
                             <constraint firstItem="uWG-Yg-hUx" firstAttribute="top" secondItem="HHl-aV-0MN" secondAttribute="bottom" constant="-20" id="VRw-FN-7BW"/>
                             <constraint firstItem="DwZ-6D-O5J" firstAttribute="top" secondItem="uWG-Yg-hUx" secondAttribute="bottom" id="XTJ-Hn-ihD"/>
                             <constraint firstItem="uWG-Yg-hUx" firstAttribute="leading" secondItem="oCK-Ie-Pwj" secondAttribute="leadingMargin" constant="-16" id="iOn-gx-b5Z"/>
+                            <constraint firstAttribute="trailing" secondItem="DHS-Hr-bX0" secondAttribute="trailing" id="iq8-YO-Goo"/>
+                            <constraint firstItem="DHS-Hr-bX0" firstAttribute="top" secondItem="oCK-Ie-Pwj" secondAttribute="top" id="rvI-x2-iXG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uWG-Yg-hUx" secondAttribute="trailing" constant="-16" id="zyw-b8-p2I"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="VjJ-QN-OAX" appends="YES" id="fxb-aj-mzs"/>
+                            <outletCollection property="gestureRecognizers" destination="a7L-eJ-2SZ" appends="YES" id="izp-md-kYa"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="uWG-Yg-hUx" id="OuL-3A-Oe0"/>
+                        <outlet property="progressView" destination="DHS-Hr-bX0" id="Ga8-aR-qWU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RNW-Q8-L7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="up" id="VjJ-QN-OAX">
+                    <connections>
+                        <action selector="swipeToDissmiss:" destination="1Tu-8P-B6l" id="Dle-RV-JNU"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="a7L-eJ-2SZ">
+                    <connections>
+                        <action selector="swipeToDissmiss:" destination="1Tu-8P-B6l" id="9JR-i5-caN"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1797.5999999999999" y="240.62968515742131"/>
         </scene>
