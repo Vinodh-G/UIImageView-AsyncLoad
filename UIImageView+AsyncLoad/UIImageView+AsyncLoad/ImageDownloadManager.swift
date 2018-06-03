@@ -10,50 +10,49 @@ import UIKit
 
 
 struct ImageDownloadInfo {
-    let downloadURLString : String
-    let downloadTask : URLSessionTask
-    let progressHandler : DownloadProgressHandler?
-    let completionHandler : DownloadHandler?
+    let downloadURLString: String
+    let downloadTask: URLSessionTask
+    let progressHandler: DownloadProgressHandler?
+    let completionHandler: DownloadHandler
 }
 
 class ImageDownloadManager: NSObject {
 
-    static let sharedManager : ImageDownloadManager = ImageDownloadManager()
+    static let shared: ImageDownloadManager = ImageDownloadManager()
     
-    var imageLoaderQueue : [String:ImageDownloadInfo] = [:]
-    var imageCache : NSCache<NSString, UIImage> = NSCache()
+    var imageLoaderQueue: [String: ImageDownloadInfo] = [:]
+    var imageCache: NSCache <NSString, UIImage> = NSCache()
     
-    lazy var downloadsSession : URLSession = URLSession(configuration: URLSessionConfiguration.default)
-    lazy var downloadDelegateSession : URLSession = URLSession(configuration: URLSessionConfiguration.default, delegate: sharedManager, delegateQueue: OperationQueue.main)
+    lazy var downloadsSession: URLSession = URLSession(configuration: URLSessionConfiguration.default)
+    lazy var downloadDelegateSession: URLSession = URLSession(configuration: URLSessionConfiguration.default, delegate: ImageDownloadManager.shared, delegateQueue: OperationQueue.main)
 
     func getImageFromURL(imageURLString:String,
                          completionHandler:@escaping DownloadHandler) {
 
-        let cachedImage : UIImage? = imageCache.object(forKey: imageURLString as NSString)
-        
-        if cachedImage != nil {
-            completionHandler(true, cachedImage, nil)
-        }else {
-            downloadImageFor(imageURLString: imageURLString, downloadHandler: completionHandler)
+        if let cachedImage = imageCache.object(forKey: imageURLString as NSString) as UIImage? {
+            completionHandler(cachedImage, nil)
+            return
         }
+        
+        downloadImageFor(imageURLString: imageURLString,
+                         downloadHandler: completionHandler)
     }
     
     func getImageFromURL(imageURLString:String,
                          progessHandler: @escaping DownloadProgressHandler,
                          completionHandler: @escaping DownloadHandler ){
-        let cachedImage : UIImage? = imageCache.object(forKey: imageURLString as NSString)
-        
-        if cachedImage != nil {
-            progessHandler(1, 1, nil)
-            completionHandler(true, cachedImage, nil)
-        }else {
-            downloadImageFor(imageURLString: imageURLString, progressHandler: progessHandler, completionHandler:completionHandler)
+        if let cachedImage = imageCache.object(forKey: imageURLString as NSString) as UIImage? {
+            completionHandler(cachedImage, nil)
+            return
         }
+        
+        downloadImageFor(imageURLString: imageURLString,
+                         progressHandler: progessHandler,
+                         completionHandler: completionHandler)
     }
     
     private func downloadImageFor(imageURLString:String,
                                   downloadHandler: @escaping DownloadHandler) {
-        
         
         var imageDownloadInfo: ImageDownloadInfo? = imageLoaderQueue[imageURLString]
         
@@ -63,23 +62,26 @@ class ImageDownloadManager: NSObject {
                 
                 OperationQueue.main.addOperation({
                     
-                    if (error != nil){
-                        downloadHandler(false, nil, error)
+                    guard let validData = data else {
+                        downloadHandler(nil, error)
+                        return;
                     }
-                    else{
-                        let image = UIImage(data: data!)
-                        ImageDownloadManager.sharedManager.imageCache.setObject(image!, forKey: imageURLString as NSString)
-                        
-                        downloadHandler(true, image, nil)
+                    
+                    guard let image = UIImage(data: validData) else {
+                        downloadHandler(nil, error)
+                        return;
                     }
-                    ImageDownloadManager.sharedManager.imageLoaderQueue[imageURLString] = nil
+                    
+                    self.imageCache.setObject(image, forKey: imageURLString as NSString)
+                    downloadHandler(image, nil)
+                    self.imageLoaderQueue[imageURLString] = nil
                 })
             })
             
             imageDownloadInfo = ImageDownloadInfo(downloadURLString: imageURLString,
                                                   downloadTask: imageLoaderTask,
                                                   progressHandler: nil,
-                                                  completionHandler:nil)
+                                                  completionHandler: downloadHandler)
             
             imageLoaderQueue[imageURLString] = imageDownloadInfo
             imageDownloadInfo?.downloadTask.resume()
@@ -110,29 +112,32 @@ class ImageDownloadManager: NSObject {
 
 extension ImageDownloadManager : URLSessionDownloadDelegate {
     
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL){
+    func urlSession(_ session: URLSession,
+                    downloadTask: URLSessionDownloadTask,
+                    didFinishDownloadingTo location: URL){
+
         
-        let imageUrl : String = (downloadTask.originalRequest?.url?.absoluteString)!
-        let imageDownloadInfo: ImageDownloadInfo? = imageLoaderQueue[imageUrl]
+        guard let imageUrl: String = downloadTask.originalRequest?.url?.absoluteString else {
+            return
+        }
         
-        if imageDownloadInfo != nil {
-            
-            
-            do {
-                let data = try Data(contentsOf: location)
-                
-                let image = UIImage(data: data)
-                
-                ImageDownloadManager.sharedManager.imageCache.setObject(image!, forKey: imageUrl as NSString)
-                
-                if let completionHandler = imageDownloadInfo?.completionHandler {
-                 
-                    completionHandler(true, image, nil)
-                }
-                
-            } catch {
-                print(error.localizedDescription)
+        guard let imageDownloadInfo: ImageDownloadInfo = imageLoaderQueue[imageUrl] else {
+            return
+        }
+        do {
+            let data = try Data(contentsOf: location)
+            guard let image = UIImage(data: data) else {
+                let handler = imageDownloadInfo.completionHandler
+                handler(nil, nil)
+                return
             }
+            ImageDownloadManager.shared.imageCache.setObject(image, forKey: imageUrl as NSString)
+            let handler = imageDownloadInfo.completionHandler
+            handler(image, nil)
+            
+        } catch {
+            let handler = imageDownloadInfo.completionHandler
+            handler(nil, nil)
         }
     }
     

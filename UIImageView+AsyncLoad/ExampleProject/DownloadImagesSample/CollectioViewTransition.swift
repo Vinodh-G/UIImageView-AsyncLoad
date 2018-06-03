@@ -80,7 +80,7 @@ class DismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
-        let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
+        _ = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
         let containerView = transitionContext.containerView
         
         let animationDuration = self .transitionDuration(using: transitionContext)

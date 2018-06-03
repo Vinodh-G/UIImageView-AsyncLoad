@@ -9,12 +9,24 @@
 import Foundation
 import UIKit
 
-typealias DownloadHandler = (_ success: Bool,  _ image: UIImage?,  _ error: Error?) -> Void
+
+protocol AsyncLoad {
+    func setImageFrom(imageURLString: String,
+    placeHolderImage: UIImage?,
+    completionHandler: DownloadHandler?)
+    
+    func setImageFrom(imageURLString : String,
+    placeHolderImage: UIImage?,
+    progressHandler: @escaping DownloadProgressHandler,
+    completionHandler: @escaping DownloadHandler)
+}
+
+typealias DownloadHandler = (_ image: UIImage?,  _ error: Error?) -> Void
 typealias DownloadProgressHandler = (_ totalBytesExpected : Int64,  _ bytesDownloaded: Int64, _ error : Error?) -> Void
 
 private var kImageURLKey : String = "imageURLKey"
 
-extension UIImageView{
+extension UIImageView: AsyncLoad {
     
     var imageURLId : String{
         
@@ -30,64 +42,62 @@ extension UIImageView{
                       placeHolderImage: UIImage? = nil,
                       completionHandler: DownloadHandler?) {
         
-        if (imageURLString.characters.count > 0){
+        guard imageURLString.count > 0  else {
+            if let handler = completionHandler {
+                handler(nil, nil)
+            }
+            return
+        }
+        
+        if placeHolderImage != nil {
+            image = placeHolderImage;
+        }
+        
+        imageURLId = imageURLString
+        ImageDownloadManager.shared.getImageFromURL(imageURLString: imageURLString) { (image : UIImage?, error :Error?) in
             
-            if ((placeHolderImage) != nil){
-                self.image = placeHolderImage;
+            guard let inImage = image else {
+                if let handler = completionHandler {
+                    handler(nil, error)
+                }
+                return
             }
             
-            self.imageURLId = imageURLString
-            
-            ImageDownloadManager.sharedManager.getImageFromURL(imageURLString: imageURLString)
-            { (success : Bool, image : UIImage?, error :Error?) in
-                
-                if (success){
-                    self.updateImage(image: image!, imageUrl: imageURLString)
-                }
-                
-                if ((completionHandler) != nil){
-                    completionHandler!(success, image, error)
-                }
+            self.updateImage(image: inImage, imageUrl: imageURLString)
+            if let handler = completionHandler {
+                handler(inImage, nil);
             }
         }
     }
     
-    func setImageFrom(imageURLString : String,
+    func setImageFrom(imageURLString: String,
                       placeHolderImage: UIImage? = nil,
                       progressHandler: @escaping DownloadProgressHandler,
-                      completionHandler: DownloadHandler?) {
+                      completionHandler: @escaping DownloadHandler) {
         
-        if (imageURLString.characters.count > 0){
-            
-            if ((placeHolderImage) != nil){
-                self.image = placeHolderImage;
-            }
-            
-            self.imageURLId = imageURLString
-            
-
-            ImageDownloadManager.sharedManager.getImageFromURL(imageURLString: imageURLString,
-                                                               progessHandler: { (expectedBytes:Int64, downloadedBytes:Int64, error:Error?) in
-                                                                if error != nil {
-                                                                    completionHandler!(false, nil, error)
-                                                                }else{
-                                                                    progressHandler(expectedBytes, downloadedBytes, nil)
-                                                                }
-                                                                
-                                                                
-            },
-                                                               completionHandler: {  (success:Bool, image:UIImage?, error:Error?) in
-                                                                
-                                                                if (success){
-                                                                    self.updateImage(image: image!, imageUrl: imageURLString)
-                                                                }
-                                                                
-                                                                if ((completionHandler) != nil){
-                                                                    completionHandler!(success, image, error)
-                                                                }
-            })
+        guard imageURLString.count > 0  else {
+            completionHandler(nil, nil)
+            return
         }
         
+        if ((placeHolderImage) != nil){
+            self.image = placeHolderImage;
+        }
+        self.imageURLId = imageURLString
+        
+        ImageDownloadManager.shared.getImageFromURL(imageURLString: imageURLString,
+                                                    progessHandler: { (expectedBytes: Int64, downloadedBytes: Int64, error: Error?) in
+                                                        progressHandler(expectedBytes, downloadedBytes, error)
+                                                        
+        }) { (image: UIImage?, error: Error?) in
+            guard let inImage = image else {
+                completionHandler(nil, nil)
+                return
+            }
+            
+            self.updateImage(image: inImage, imageUrl: imageURLString)
+            completionHandler(inImage, error)
+        }
     }
     
     private func updateImage(image:UIImage, imageUrl:String) {

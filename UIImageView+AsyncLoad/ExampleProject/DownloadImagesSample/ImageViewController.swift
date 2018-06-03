@@ -29,7 +29,7 @@ class ImageViewController: UIViewController {
                 
                 self.progressView.setProgress(progress, animated: true)
                 
-            }, completionHandler:{(success, image, error) in
+            }, completionHandler:{(image, error) in
                 self.progressView.isHidden = true
             })
         }
